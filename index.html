@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tejidos de Ensueño Lopez</title>
+    <title>Tejidos de Ensueño</title>
     <!-- Fuente elegante de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
@@ -105,7 +105,7 @@
         .hero {
             background: linear-gradient(rgba(11, 29, 58, 0.8), rgba(11, 29, 58, 0.8)), 
                         url('https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=1000') center/cover no-repeat;
-            height: 70vh;
+            height: 60vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -143,6 +143,51 @@
             color: var(--dorado-brillante);
         }
 
+        /* Sección Historia / Cómo Empezó */
+        .historia {
+            padding: 4rem 5%;
+            background-color: #ffffff;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .contenedor-historia {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .historia-texto h2 {
+            font-size: 2.2rem;
+            color: var(--azul-oscuro);
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .historia-texto h2::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background-color: var(--dorado);
+            display: block;
+            margin-top: 5px;
+        }
+
+        .historia-texto p {
+            margin-bottom: 15px;
+            color: #555;
+            text-align: justify;
+        }
+
+        .historia-img img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--dorado-brillante);
+        }
+
         /* Sección de Productos */
         .productos {
             padding: 4rem 5%;
@@ -171,7 +216,7 @@
 
         .grid-productos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
         }
 
@@ -194,18 +239,23 @@
 
         .tarjeta-producto img {
             width: 100%;
-            height: 250px;
+            height: 220px;
             object-fit: cover;
         }
 
         .info-producto {
             padding: 20px;
             text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .info-producto h3 {
             color: var(--azul-oscuro);
             margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
         .precio {
@@ -230,6 +280,114 @@
         .btn-comprar:hover {
             background-color: var(--dorado);
             color: var(--azul-oscuro);
+        }
+
+        /* Sección de Pedidos por WhatsApp Directo */
+        .seccion-whatsapp {
+            background-color: var(--azul-intermedio);
+            color: var(--blanco-perlado);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .contenedor-whatsapp {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .seccion-whatsapp h2 {
+            color: var(--dorado-brillante);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .seccion-whatsapp p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .btn-ws-directo {
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-ws-directo:hover {
+            background-color: #128C7E;
+            transform: scale(1.03);
+        }
+
+        /* Sección de Comentarios */
+        .comentarios {
+            padding: 4rem 5%;
+            background-color: #ffffff;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .formulario-comentario {
+            background-color: var(--blanco-perlado);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .formulario-comentario input, 
+        .formulario-comentario textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-enviar-comentario {
+            background-color: var(--azul-oscuro);
+            color: var(--blanco-perlado);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-enviar-comentario:hover {
+            background-color: var(--dorado);
+            color: var(--azul-oscuro);
+        }
+
+        .lista-comentarios {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tarjeta-comentario {
+            background-color: var(--blanco-perlado);
+            padding: 15px 20px;
+            border-left: 4px solid var(--dorado);
+            border-radius: 4px;
+        }
+
+        .tarjeta-comentario h4 {
+            color: var(--azul-oscuro);
+            margin-bottom: 5px;
+        }
+
+        .tarjeta-comentario p {
+            color: #555;
+            font-size: 0.95rem;
         }
 
         /* Modal del Carrito (Ventana flotante) */
@@ -322,7 +480,6 @@
             color: var(--blanco-perlado);
             text-align: center;
             padding: 2rem;
-            margin-top: 4rem;
             border-top: 3px solid var(--dorado);
         }
 
@@ -336,11 +493,13 @@
 
     <!-- Encabezado -->
     <header>
-        <h1>Tejidos de Ensueño Lopez</h1>
+        <h1>Tejidos de Ensueño</h1>
         <nav>
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#historia">Nosotros</a></li>
                 <li><a href="#productos">Productos</a></li>
+                <li><a href="#comentarios">Opiniones</a></li>
                 <li>
                     <button class="btn-carrito-nav" onclick="abrirCarrito()">
                         🛒 Carrito <span class="contador-carrito" id="contador">0</span>
@@ -353,11 +512,25 @@
     <!-- Banner Principal -->
     <section class="hero" id="inicio">
         <h2>Calidez y Elegancia Hecha a Mano</h2>
-        <p>Descubre nuestra exclusivas prendas y accesorios tejidos con amor, dedicación y los mejores hilos.</p>
+        <p>Descubre nuestras exclusivas prendas y accesorios tejidos con amor, dedicación y los mejores hilos.</p>
         <a href="#productos" class="btn-dorado">Ver Colección</a>
     </section>
 
-    <!-- Catálogo de Productos -->
+    <!-- Sección Cómo Empezó el Emprendimiento -->
+    <section class="historia" id="historia">
+        <div class="contenedor-historia">
+            <div class="historia-texto">
+                <h2>Nuestra Historia</h2>
+                <p><strong>Tejidos de Ensueño</strong> nació de una profunda pasión familiar por el arte del tejido a mano. Lo que comenzó en el salón de un hogar como un pasatiempo para confeccionar detalles únicos para seres queridos, poco a poco se convirtió en un sueño compartido.</p>
+                <p>Cada puntada refleja tradición, ternura y el deseo de llevar calidez a cada hogar. Hoy nos enorgullece crear piezas exclusivas hechas con insumos de alta calidad y el corazón puesto en cada diseño.</p>
+            </div>
+            <div class="historia-img">
+                <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Tejiendo a mano">
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo de Productos (10 Productos) -->
     <section class="productos" id="productos">
         <h2 class="titulo-seccion">Nuestros Productos</h2>
         
@@ -376,9 +549,9 @@
             <div class="tarjeta-producto">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOcKZoWUQ5ZQQNtkcg3qFEmKyTOzjB-7ciMJZinEmHXA&s=10" alt="Perrito Tejido">
                 <div class="info-producto">
-                    <h3>Llavero de cachorro</h3>
+                    <h3>Llavero de Cachorro</h3>
                     <p class="precio">$18.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Llavero de cachorro', 18000)">Añadir al Carrito</button>
+                    <button class="btn-comprar" onclick="agregarAlCarrito('Llavero de Cachorro', 18000)">Añadir al Carrito</button>
                 </div>
             </div>
 
@@ -390,6 +563,109 @@
                     <p class="precio">$25.000</p>
                     <button class="btn-comprar" onclick="agregarAlCarrito('Tortuga Girasol', 25000)">Añadir al Carrito</button>
                 </div>
+            </div>
+
+            <!-- Producto 4 -->
+            <div class="tarjeta-producto">
+                <img src="https://images.unsplash.com/photo-1576032761488-72a2409c88e4?q=80&w=400" alt="Gorro tejido">
+                <div class="info-producto">
+                    <h3>Gorro Lana Invierno</h3>
+                    <p class="precio">$20.000</p>
+                    <button class="btn-comprar" onclick="agregarAlCarrito('Gorro Lana Invierno', 20000)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Producto 5 -->
+            <div class="tarjeta-producto">
+                <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?q=80&w=400" alt="Bufanda tejida">
+                <div class="info-producto">
+                    <h3>Bufanda Elegancia Dorada</h3>
+                    <p class="precio">$30.000</p>
+                    <button class="btn-comprar" onclick="agregarAlCarrito('Bufanda Elegancia Dorada', 30000)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Producto 6 -->
+            <div class="tarjeta-producto">
+                <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=400" alt="Zapatitos bebé">
+                <div class="info-producto">
+                    <h3>Zapatitos Tejidos Bebé</h3>
+                    <p class="precio">$15.000</p>
+                    <button class="btn-comprar" onclick="agregarAlCarrito('Zapatitos Tejidos Bebé', 15000)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Producto 7 -->
+            <div class="tarjeta-producto">
+                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=400" alt="Cojín decorativo">
+                <div class="info-producto">
+                    <h3>Cojín Decorativo Tejido</h3>
+                    <p class="precio">$35.000</p>
+                    <button class="btn-comprar" onclick="agregarAlCarrito('Cojín Decorativo Tejido', 35000)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Producto 8 -->
+            <div class="tarjeta-producto">
+                <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=400" alt="Bolso artesanal">
+                <div class="info-producto">
+                    <h3>Bolso Artesanal Crochet</h3>
+                    <p class="precio">$40.000</p>
+                    <button class="btn-comprar" onclick="agregarAlCarrito('Bolso Artesanal Crochet', 40000)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Producto 9 -->
+            <div class="tarjeta-producto">
+                <img src="https://images.unsplash.com/photo-1619252584172-a83a949b6efd?q=80&w=400" alt="Ramo de flores tejidas">
+                <div class="info-producto">
+                    <h3>Ramo de Flores Eternas</h3>
+                    <p class="precio">$32.000</p>
+                    <button class="btn-comprar" onclick="agregarAlCarrito('Ramo de Flores Eternas', 32000)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Producto 10 -->
+            <div class="tarjeta-producto">
+                <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=400" alt="Suéter tejido">
+                <div class="info-producto">
+                    <h3>Suéter Tejido Clásico</h3>
+                    <p class="precio">$60.000</p>
+                    <button class="btn-comprar" onclick="agregarAlCarrito('Suéter Tejido Clásico', 60000)">Añadir al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Pedidos por WhatsApp -->
+    <section class="seccion-whatsapp">
+        <div class="contenedor-whatsapp">
+            <h2>¿Buscas un diseño personalizado?</h2>
+            <p>Realizamos pedidos especiales a la medida. Contáctanos directamente vía WhatsApp para cotizar tu tejido ideal.</p>
+            <a href="https://wa.me/573247245116?text=Hola,%20me%20gustaría%20solicitar%20un%20pedido%20personalizado" target="_blank" class="btn-ws-directo">
+                💬 Hacer Pedido por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Sección de Comentarios -->
+    <section class="comentarios" id="comentarios">
+        <h2 class="titulo-seccion">Déjanos tu Comentario</h2>
+        
+        <div class="formulario-comentario">
+            <input type="text" id="nombreComentario" placeholder="Tu Nombre" required>
+            <textarea id="textoComentario" rows="4" placeholder="Escribe tu opinión o sugerencia aquí..." required></textarea>
+            <button class="btn-enviar-comentario" onclick="agregarComentario()">Publicar Comentario</button>
+        </div>
+
+        <div class="lista-comentarios" id="listaComentarios">
+            <div class="tarjeta-comentario">
+                <h4>María Camila G.</h4>
+                <p>¡Me encantó la manta Dulce Sueño! La textura es súper suave y la entrega fue muy rápida. 100% recomendados.</p>
+            </div>
+            <div class="tarjeta-comentario">
+                <h4>Andrés Felipe</h4>
+                <p>El llavero de cachorro es hermosísimo, se nota el cariño y el detalle en la costura.</p>
             </div>
         </div>
     </section>
@@ -409,25 +685,25 @@
         </div>
     </div>
 
-    <!-- Pie de Página -->
+    <!-- Pie de Página (Contacto) -->
     <footer id="contacto">
-        <p>&copy; 2026 Tejidos de Ensueño Lopez. Todos los derechos reservados.</p>
+        <p>&copy; 2026 Tejidos de Ensueño. Todos los derechos reservados.</p>
         <p>Hecho con amor y dedicación artesanales.</p>
     </footer>
 
-    <!-- Lógica en JavaScript para el Carrito -->
+    <!-- Lógica en JavaScript -->
     <script>
         let carrito = [];
         let total = 0;
 
-        // ** REEMPLAZA ESTE NÚMERO POR EL TUYO CON CÓDIGO DE PAÍS **
-        // Ej: '573001234567' para Colombia
-        const numeroTelefono = "3247245116"; 
+        // ** Número telefónico configurado **
+        const numeroTelefono = "573247245116"; 
 
         function agregarAlCarrito(nombre, precio) {
             carrito.push({ nombre, precio });
             actualizarCarrito();
-            alert(`¡${nombre} añadido al carrito!`);
+            // Abre el carrito automáticamente al agregar un producto
+            abrirCarrito();
         }
 
         function eliminarDelCarrito(index) {
@@ -476,7 +752,7 @@
                 return;
             }
 
-            let mensaje = "Hola, me gustaría hacer el siguiente pedido en *Tejidos de Ensueño Lopez*:\n\n";
+            let mensaje = "Hola, me gustaría hacer el siguiente pedido en *Tejidos de Ensueño*:\n\n";
             carrito.forEach((item, i) => {
                 mensaje += `${i + 1}. ${item.nombre} - $${item.precio.toLocaleString()}\n`;
             });
@@ -484,6 +760,31 @@
 
             const url = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
+        }
+
+        // Función para añadir comentarios dinámicamente
+        function agregarComentario() {
+            const nombre = document.getElementById('nombreComentario').value.trim();
+            const texto = document.getElementById('textoComentario').value.trim();
+
+            if (nombre === '' || texto === '') {
+                alert('Por favor completa tu nombre y comentario.');
+                return;
+            }
+
+            const contenedorComentarios = document.getElementById('listaComentarios');
+            const nuevaTarjeta = document.createElement('div');
+            nuevaTarjeta.className = 'tarjeta-comentario';
+            nuevaTarjeta.innerHTML = `
+                <h4>${nombre}</h4>
+                <p>${texto}</p>
+            `;
+
+            contenedorComentarios.prepend(nuevaTarjeta);
+
+            // Limpiar inputs
+            document.getElementById('nombreComentario').value = '';
+            document.getElementById('textoComentario').value = '';
         }
     </script>
 
