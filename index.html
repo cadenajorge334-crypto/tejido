@@ -418,7 +418,7 @@
             font-size: 0.95rem;
         }
 
-        /* Modal del Carrito (Ventana flotante) */
+        /* Modal del Carrito (Solo se muestra cuando el usuario hace clic arriba) */
         .modal-carrito {
             display: none;
             position: fixed;
@@ -679,7 +679,7 @@
         </div>
     </section>
 
-    <!-- Sección de Pedidos por WhatsApp -->
+    <!-- Sección de Pedidos por WhatsApp Directo -->
     <section class="seccion-whatsapp">
         <div class="contenedor-whatsapp">
             <h2>¿Buscas un diseño personalizado?</h2>
@@ -733,19 +733,18 @@
         <p>Hecho con amor y dedicación artesanales.</p>
     </footer>
 
-    <!-- Lógica en JavaScript -->
+    <!-- Lógica en JavaScript Silenciosa y Eficiente -->
     <script>
         let carrito = [];
         let total = 0;
 
-        // ** Número telefónico configurado **
+        // Número de contacto para WhatsApp
         const numeroTelefono = "573247245116"; 
 
+        // Agrega productos silenciosamente (SIN alertas ni abrir ventanas emergentes)
         function agregarAlCarrito(nombre, precio) {
             carrito.push({ nombre, precio });
             actualizarCarrito();
-            // Abre el carrito automáticamente al agregar un producto
-            abrirCarrito();
         }
 
         function eliminarDelCarrito(index) {
@@ -780,6 +779,7 @@
             totalElemento.innerText = total.toLocaleString();
         }
 
+        // Abrir y cerrar la vista del carrito solo cuando el usuario lo pida
         function abrirCarrito() {
             document.getElementById('modalCarrito').style.display = 'flex';
         }
@@ -790,7 +790,6 @@
 
         function enviarPedido() {
             if (carrito.length === 0) {
-                alert("Tu carrito está vacío.");
                 return;
             }
 
@@ -804,13 +803,12 @@
             window.open(url, '_blank');
         }
 
-        // Función para añadir comentarios dinámicamente
+        // Función para agregar opiniones sin recargar la página
         function agregarComentario() {
             const nombre = document.getElementById('nombreComentario').value.trim();
             const texto = document.getElementById('textoComentario').value.trim();
 
             if (nombre === '' || texto === '') {
-                alert('Por favor completa tu nombre y comentario.');
                 return;
             }
 
@@ -824,7 +822,6 @@
 
             contenedorComentarios.prepend(nuevaTarjeta);
 
-            // Limpiar inputs
             document.getElementById('nombreComentario').value = '';
             document.getElementById('textoComentario').value = '';
         }
