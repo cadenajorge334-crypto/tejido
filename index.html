@@ -465,6 +465,14 @@
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
+            gap: 10px;
+        }
+
+        .item-carrito-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-grow: 1;
         }
 
         .btn-eliminar {
@@ -743,12 +751,17 @@
 
         // Agrega productos silenciosamente (SIN alertas ni abrir ventanas emergentes)
         function agregarAlCarrito(nombre, precio) {
-            carrito.push({ nombre, precio });
+            carrito.push({ nombre, precio, seleccionado: true });
             actualizarCarrito();
         }
 
         function eliminarDelCarrito(index) {
             carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        function cambiarSeleccion(index) {
+            carrito[index].seleccionado = !carrito[index].seleccionado;
             actualizarCarrito();
         }
 
@@ -764,11 +777,16 @@
                 lista.innerHTML = '<li>El carrito está vacío.</li>';
             } else {
                 carrito.forEach((item, index) => {
-                    total += item.precio;
+                    if (item.seleccionado) {
+                        total += item.precio;
+                    }
                     const li = document.createElement('li');
                     li.className = 'item-carrito';
                     li.innerHTML = `
-                        <span>${item.nombre} - $${item.precio.toLocaleString()}</span>
+                        <div class="item-carrito-info">
+                            <input type="checkbox" ${item.seleccionado ? 'checked' : ''} onchange="cambiarSeleccion(${index})">
+                            <span>${item.nombre} - $${item.precio.toLocaleString()}</span>
+                        </div>
                         <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">X</button>
                     `;
                     lista.appendChild(li);
@@ -789,18 +807,24 @@
         }
 
         function enviarPedido() {
-            if (carrito.length === 0) {
+            const itemsAComprar = carrito.filter(item => item.seleccionado);
+
+            if (itemsAComprar.length === 0) {
                 return;
             }
 
             let mensaje = "Hola, me gustaría hacer el siguiente pedido en *Tejidos de Ensueño*:\n\n";
-            carrito.forEach((item, i) => {
+            itemsAComprar.forEach((item, i) => {
                 mensaje += `${i + 1}. ${item.nombre} - $${item.precio.toLocaleString()}\n`;
             });
             mensaje += `\n*Total a pagar:* $${total.toLocaleString()}`;
 
             const url = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
+
+            // Mantener únicamente los elementos que NO estaban seleccionados (dejándolos en el carrito)
+            carrito = carrito.filter(item => !item.seleccionado);
+            actualizarCarrito();
         }
 
         // Función para agregar opiniones sin recargar la página
