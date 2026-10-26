@@ -50,6 +50,61 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
+        .logo-contenedor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .logo-circulo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--dorado);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .logo-circulo:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Vista Expandida de la Imagen del Logo en Cuadrado (Sin moverse del sitio) */
+        .logo-ampliado {
+            position: absolute;
+            top: 55px;
+            left: 0;
+            width: 240px;
+            height: 240px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--dorado);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 300;
+            display: none;
+            background-color: white;
+            animation: aparecerZoom 0.25s ease forwards;
+        }
+
+        .logo-ampliado.activo {
+            display: block;
+        }
+
+        @keyframes aparecerZoom {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         header h1 {
             color: var(--dorado);
             font-size: 1.8rem;
@@ -216,7 +271,7 @@
             border: 0;
         }
 
-        /* Sección de Productos */
+        /* Sección de Productos y Pestañas */
         .productos {
             padding: 4rem 5%;
             max-width: 1200px;
@@ -227,7 +282,7 @@
             text-align: center;
             font-size: 2.3rem;
             color: var(--azul-oscuro);
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             position: relative;
         }
 
@@ -242,12 +297,52 @@
             transform: translateX(-50%);
         }
 
+        /* Estilos de las Pestañas (Tabs) */
+        .contenedor-pestanas {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .btn-pestana {
+            background-color: #ffffff;
+            color: var(--azul-oscuro);
+            border: 1px solid var(--dorado);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-pestana:hover {
+            background-color: var(--dorado-brillante);
+        }
+
+        .btn-pestana.activa {
+            background-color: var(--azul-oscuro);
+            color: var(--dorado);
+            border-color: var(--azul-oscuro);
+        }
+
+        /* Contenido de las Pestañas */
+        .contenido-pestana {
+            display: none;
+        }
+
+        .contenido-pestana.activa {
+            display: block;
+        }
+
         .grid-productos {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
         }
 
+        /* Tarjeta de Producto con Carrusel Directo e Interactivo */
         .tarjeta-producto {
             background-color: #ffffff;
             border-radius: 12px;
@@ -258,6 +353,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
         }
 
         .tarjeta-producto:hover {
@@ -265,10 +361,118 @@
             box-shadow: 0 10px 20px rgba(11, 29, 58, 0.15);
         }
 
-        .tarjeta-producto img {
+        /* Contenedor del Carrusel Directo en la Tarjeta */
+        .carrusel-producto {
+            position: relative;
             width: 100%;
             height: 220px;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .carrusel-inner {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .carrusel-item {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carrusel-item img, 
+        .carrusel-item video {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+        }
+
+        /* Botones laterales suaves para pasar fotos/videos */
+        .btn-carrusel {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(11, 29, 58, 0.5);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-carrusel:hover {
+            background-color: var(--azul-oscuro);
+        }
+
+        .btn-prev {
+            left: 8px;
+        }
+
+        .btn-next {
+            right: 8px;
+        }
+
+        /* Indicadores (puntitos) sutiles abajo de la foto */
+        .carrusel-puntos {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .punto {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .punto.activo {
+            background-color: var(--dorado);
+            width: 14px;
+            border-radius: 3px;
+        }
+
+        /* Efecto de Zoom Suave Directo en la Tarjeta con línea dorada y sin fondo negro */
+        .carrusel-producto.ampliado {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            border: 2px solid var(--dorado);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            animation: zoomTarjeta 0.25s ease forwards;
+            background-color: #ffffff;
+        }
+
+        @keyframes zoomTarjeta {
+            from {
+                transform: scale(0.95);
+            }
+            to {
+                transform: scale(1.03);
+            }
         }
 
         .info-producto {
@@ -418,7 +622,7 @@
             font-size: 0.95rem;
         }
 
-        /* Modal del Carrito (Solo se muestra cuando el usuario hace clic arriba) */
+        /* Modal del Carrito */
         .modal-carrito {
             display: none;
             position: fixed;
@@ -529,7 +733,12 @@
 
     <!-- Encabezado -->
     <header>
-        <h1>Tejidos de Ensueño</h1>
+        <div class="logo-contenedor">
+            <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Logo Tejidos de Ensueño" class="logo-circulo" id="imgLogoMini">
+            <!-- Imagen en estilo cuadrado ampliado que aparece sin quitarse del sitio -->
+            <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Logo Ampliado" class="logo-ampliado" id="imgLogoAmpliado">
+            <h1>Tejidos de Ensueño</h1>
+        </div>
         <nav>
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
@@ -580,109 +789,406 @@
         </div>
     </section>
 
-    <!-- Catálogo de Productos (10 Productos) -->
+    <!-- Catálogo de Productos con Pestañas -->
     <section class="productos" id="productos">
         <h2 class="titulo-seccion">Nuestros Productos</h2>
         
-        <div class="grid-productos">
-            <!-- Producto 1 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/ETt32EQOqd3kns1d2JsflNMImpw_yfSKp-Xs8OpcgCnJriSQiTaIb6lYKa_Nc81MO0HzKRGWLa0gFQ=s1448-nd-v1" alt="Llavero tejido">
-                <div class="info-producto">
-                    <h3>Llavero gatito</h3>
-                    <p class="precio">$15.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Llavero gatito', 15000)">Añadir al Carrito</button>
+        <!-- Botones de las Pestañas -->
+        <div class="contenedor-pestanas">
+            <button class="btn-pestana activa" onclick="cambiarPestana(event, 'flores')">Flores</button>
+            <button class="btn-pestana" onclick="cambiarPestana(event, 'bebe')">Ropa para Bebé</button>
+            <button class="btn-pestana" onclick="cambiarPestana(event, 'llaveros')">Llaveros</button>
+            <button class="btn-pestana" onclick="cambiarPestana(event, 'amigurumis')">Amigurumis</button>
+            <button class="btn-pestana" onclick="cambiarPestana(event, 'accesorios')">Accesorios</button>
+            <button class="btn-pestana" onclick="cambiarPestana(event, 'hogar')">Hogar</button>
+            <button class="btn-pestana" onclick="cambiarPestana(event, 'prendas')">Prendas</button>
+            <button class="btn-pestana" onclick="cambiarPestana(event, 'otras')">Otras Cositas</button>
+        </div>
+
+        <!-- Pestaña 1: Flores (10 productos con carrusel completo) -->
+        <div id="flores" class="contenido-pestana activa">
+            <div class="grid-productos">
+                <!-- Producto 1 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://yt3.ggpht.com/QhhvwL9Gm2B5D8aFpZK2uh5V_XyOwRvfMVf-wFM96G1pBTeg1Swl1cr3CZPhhML75h5HNv6QMFSn=s640-c-fcrop64=1,20000000dfffffff-nd-v1" alt="Rosa tejida individual"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Rosa tejida individual</h3>
+                        <p class="precio">$10.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Rosa tejida individual', 10000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Ramo de tulipanes tejidos"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Ramo de tulipanes tejidos</h3>
+                        <p class="precio">$50.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Ramo de tulipanes tejidos', 50000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Girasol tejido individual"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Girasol tejido individual</h3>
+                        <p class="precio">$15.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Girasol tejido individual', 15000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Margarita tejida"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Margarita tejida</h3>
+                        <p class="precio">$12.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Margarita tejida', 12000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 5 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Caja de rosas eternas tejidas"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Caja de rosas eternas tejidas</h3>
+                        <p class="precio">$70.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Caja de rosas eternas tejidas', 70000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 6 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Ramo de lavanda tejida"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Ramo de lavanda tejida</h3>
+                        <p class="precio">$30.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Ramo de lavanda tejida', 30000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 7 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Clavel tejido"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Clavel tejido</h3>
+                        <p class="precio">$14.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Clavel tejido', 14000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 8 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Orquídea tejida de lujo"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Orquídea tejida de lujo</h3>
+                        <p class="precio">$85.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Orquídea tejida de lujo', 85000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 9 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Maceta con suculenta tejida"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Maceta con suculenta tejida</h3>
+                        <p class="precio">$25.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Maceta con suculenta tejida', 25000)">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <!-- Producto 10 -->
+                <div class="tarjeta-producto">
+                    <div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)">
+                        <div class="carrusel-inner">
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Corona decorativa de flores"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 2"></div>
+                            <div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600" alt="Vista 3"></div>
+                            <div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div>
+                        </div>
+                        <button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button>
+                        <button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button>
+                        <div class="carrusel-puntos">
+                            <span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span>
+                            <span class="punto" onclick="event.stopPropagation(); irSlide(this, 3)"></span>
+                        </div>
+                    </div>
+                    <div class="info-producto">
+                        <h3>Corona decorativa de flores</h3>
+                        <p class="precio">$45.000</p>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Corona decorativa de flores', 45000)">Añadir al Carrito</button>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Producto 2 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/FWPYCJux9YclTEMykuCrguyJr9PGfjD0ilQQbzXkgvGWdtVmSa6UBylu9-xMaMOwr9hEs9Z1RXOIww=s640-c-fcrop64=1,20000000dfffffff-nd-v1" alt="Zapatillas tejidas">
-                <div class="info-producto">
-                    <h3>Zapatillas tejidas</h3>
-                    <p class="precio">$25.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Zapatillas tejidas', 25000)">Añadir al Carrito</button>
-                </div>
+        <!-- Pestaña 2: Ropa para Bebé (10 productos con carrusel completo) -->
+        <div id="bebe" class="contenido-pestana">
+            <div class="grid-productos">
+                <!-- 10 productos para Bebé -->
+                <script>
+                    // Generación dinámica de plantillas de 10 productos estándar para mantener orden
+                </script>
+                <!-- Producto 1 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/pCMbWN9wq9-jda3agjoYJAeh_8yf7tj2Uj8r6HQv1kRUA3CLHedatw5QpyYmNtAq_zYRCYrvUb7ooA=s1024-c-fcrop64=1,20000000dfffffff-rw-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Zapatitos Tejidos Bebé</h3><p class="precio">$25.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Zapatitos Tejidos Bebé', 25000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 2 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Gorro tierno para recién nacido</h3><p class="precio">$18.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Gorro tierno para recién nacido', 18000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 3 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Suéter tejido clásico de bebé</h3><p class="precio">$55.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Suéter tejido clásico de bebé', 55000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 4 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Manta de cuna tejida suave</h3><p class="precio">$90.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Manta de cuna tejida suave', 90000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 5 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Babero artesanal tejido</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Babero artesanal tejido', 15000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 6 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Manoplas antirasguño tejidas</h3><p class="precio">$12.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Manoplas antirasguño tejidas', 12000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 7 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Pantalón bombacho tejido</h3><p class="precio">$30.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Pantalón bombacho tejido', 30000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 8 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Vestido tejido campana</h3><p class="precio">$65.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Vestido tejido campana', 65000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 9 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Diadema tejida con lazo</h3><p class="precio">$14.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Diadema tejida con lazo', 14000)">Añadir al Carrito</button></div></div>
+                <!-- Producto 10 -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Set regalo recién nacido (Gorrito + Botas)</h3><p class="precio">$40.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Set regalo recién nacido', 40000)">Añadir al Carrito</button></div></div>
             </div>
+        </div>
 
-            <!-- Producto 3 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/h0l08EZe4kbha6oMcWvUSCJn6FnGIR66thwCXsO85Yq6EW3QdQ907LztPdwykpkb8M7I3TCiJFa4=s640-c-fcrop64=1,00002000ffffdfff-nd-v1" alt="posa vasos tejido">
-                <div class="info-producto">
-                    <h3>Posa vasos tejidos</h3>
-                    <p class="precio">$25.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Posa vasos tejidos', 25000)">Añadir al Carrito</button>
-                </div>
+        <!-- Pestaña 3: Llaveros (10 productos con carrusel completo) -->
+        <div id="llaveros" class="contenido-pestana">
+            <div class="grid-productos">
+                <!-- 10 productos para Llaveros -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/ETt32EQOqd3kns1d2JsflNMImpw_yfSKp-Xs8OpcgCnJriSQiTaIb6lYKa_Nc81MO0HzKRGWLa0gFQ=s1448-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero gatito</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero gatito', 15000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/2phXycVqgEOWvv5AC2TcarXU7oMQRj1pltDpPs-wboOMBQQ94xJTNBn21HeTuJkPHEBV2KNjvbUFTg=s1024-c-fcrop64=1,20000000dfffffff-rw-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero de periquito tejido</h3><p class="precio">$20.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero de periquito tejido', 20000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/48PM-NmbjO6BC0QOPY-3QP9GGbIo3r68VujYN5KucmzXa-Cdp31PZ1t-_B1J1HX_EVhLlDZZKzN1prM=s1024-c-fcrop64=1,20000000dfffffff-rw-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Pollito vaquero tejido</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Pollito vaquero tejido', 15000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero perrito tierno</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero perrito tierno', 15000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero aguacate sonriente</h3><p class="precio">$14.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero aguacate sonriente', 14000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero rana con sombrero</h3><p class="precio">$16.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero rana con sombrero', 16000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero estrella fugaz</h3><p class="precio">$12.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero estrella fugaz', 12000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero minirrosa en bolsita</h3><p class="precio">$10.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero minirrosa en bolsita', 10000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero fantasmita divertido</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero fantasmita divertido', 15000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Llavero tortuguita marina</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Llavero tortuguita marina', 15000)">Añadir al Carrito</button></div></div>
             </div>
+        </div>
 
-            <!-- Producto 4 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/QhhvwL9Gm2B5D8aFpZK2uh5V_XyOwRvfMVf-wFM96G1pBTeg1Swl1cr3CZPhhML75h5HNv6QMFSn=s640-c-fcrop64=1,20000000dfffffff-nd-v1" alt="Rosas tejidas">
-                <div class="info-producto">
-                    <h3>Rosa tejida individual</h3>
-                    <p class="precio">$10.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Rosa tejida individual', 10000)">Añadir al Carrito</button>
-                </div>
+        <!-- Pestaña 4: Amigurumis (10 productos con carrusel completo) -->
+        <div id="amigurumis" class="contenido-pestana">
+            <div class="grid-productos">
+                <!-- 10 productos para Amigurumis -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/ZKIh_el4DJWzfKnQPEeA8D5pmjsYo12HIG2GR9hC-ZcKFtvAas3bMs5EPzjBgEWR7nCG-I_-9gV_tDQ=s1024-rw-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Amigurumi de Freddy Fazbear</h3><p class="precio">$45.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Amigurumi de Freddy Fazbear', 45000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Osito dormilón grande</h3><p class="precio">$55.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Osito dormilón grande', 55000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Conejo orejón amigurumi</h3><p class="precio">$40.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Conejo orejón amigurumi', 40000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Zorrito tierno tejido</h3><p class="precio">$42.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Zorrito tierno tejido', 42000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Osito panda amigurumi</h3><p class="precio">$45.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Osito panda amigurumi', 45000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Unicornio mágico tejido</h3><p class="precio">$50.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Unicornio mágico tejido', 50000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Ballena azul abrazable</h3><p class="precio">$38.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Ballena azul abrazable', 38000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Dinosaurio rex amigurumi</h3><p class="precio">$48.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Dinosaurio rex amigurumi', 48000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Elefante gris orejón</h3><p class="precio">$45.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Elefante gris orejón', 45000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Pollito regordete amigurumi</h3><p class="precio">$35.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Pollito regordete amigurumi', 35000)">Añadir al Carrito</button></div></div>
             </div>
+        </div>
 
-            <!-- Producto 5 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/ZKIh_el4DJWzfKnQPEeA8D5pmjsYo12HIG2GR9hC-ZcKFtvAas3bMs5EPzjBgEWR7nCG-I_-9gV_tDQ=s1024-rw-nd-v1" alt="Osito tejido">
-                <div class="info-producto">
-                    <h3>Amigurumi de Freddy Fazbear</h3>
-                    <p class="precio">$45.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Amigurumi de Freddy Fazbear', 45000)">Añadir al Carrito</button>
-                </div>
+        <!-- Pestaña 5: Accesorios (10 productos con carrusel completo) -->
+        <div id="accesorios" class="contenido-pestana">
+            <div class="grid-productos">
+                <!-- 10 productos para Accesorios -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/NKaEXy1oW8jGtGHVZ6_CZ2EPiQ9D49WL-2XpikyU4mhSsVI5P7Qaga3hb5zvo_hUVl1X3xUjyMAS0o0=s1024-c-fcrop64=1,20000000dfffffff-rw-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Pañuelo Tejido</h3><p class="precio">$35.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Pañuelo Tejido', 35000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Bufanda elegante de invierno</h3><p class="precio">$40.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Bufanda elegante de invierno', 40000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Bolso de mano tejido tipo red</h3><p class="precio">$65.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Bolso de mano tejido tipo red', 65000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Gorro con pompón para adulto</h3><p class="precio">$30.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Gorro con pompón para adulto', 30000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Guantes sin dedos tejidos</h3><p class="precio">$22.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Guantes sin dedos tejidos', 22000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Cinturón trenzado artesanal</h3><p class="precio">$28.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Cinturón trenzado artesanal', 28000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Monedero tejido con broche</h3><p class="precio">$20.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Monedero tejido con broche', 20000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Banda turbante para el cabello</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Banda turbante para el cabello', 15000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Funda protectora para lentes</h3><p class="precio">$18.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Funda protectora para lentes', 18000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Collar choker tejido con cuentas</h3><p class="precio">$25.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Collar choker tejido con cuentas', 25000)">Añadir al Carrito</button></div></div>
             </div>
+        </div>
 
-            <!-- Producto 6 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/pCMbWN9wq9-jda3agjoYJAeh_8yf7tj2Uj8r6HQv1kRUA3CLHedatw5QpyYmNtAq_zYRCYrvUb7ooA=s1024-c-fcrop64=1,20000000dfffffff-rw-nd-v1" alt="Zapatitos bebé">
-                <div class="info-producto">
-                    <h3>Zapatitos Tejidos Bebé</h3>
-                    <p class="precio">$25.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Zapatitos Tejidos Bebé', 25000)">Añadir al Carrito</button>
-                </div>
+        <!-- Pestaña 6: Hogar (10 productos con carrusel completo) -->
+        <div id="hogar" class="contenido-pestana">
+            <div class="grid-productos">
+                <!-- 10 productos para Hogar -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/h0l08EZe4kbha6oMcWvUSCJn6FnGIR66thwCXsO85Yq6EW3QdQ907LztPdwykpkb8M7I3TCiJFa4=s640-c-fcrop64=1,00002000ffffdfff-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Posa vasos tejidos (Set x 4)</h3><p class="precio">$25.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Posa vasos tejidos (Set x 4)', 25000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Cojín decorativo tejido trenzado</h3><p class="precio">$50.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Cojín decorativo tejido trenzado', 50000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Camino de mesa artesanal</h3><p class="precio">$70.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Camino de mesa artesanal', 70000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Individual de mesa redondo</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Individual de mesa redondo', 15000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Atrapasueños tejido en macramé</h3><p class="precio">$45.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Atrapasueños tejido en macramé', 45000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Cesta organizadora de trapillo</h3><p class="precio">$35.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Cesta organizadora de trapillo', 35000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Funda térmica tejida para taza</h3><p class="precio">$12.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Funda térmica tejida para taza', 12000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Cortina pequeña decorativa</h3><p class="precio">$95.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Cortina pequeña decorativa', 95000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Tapete de entrada en trapillo</h3><p class="precio">$60.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Tapete de entrada en trapillo', 60000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Funda de cojín estilo boho</h3><p class="precio">$40.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Funda de cojín estilo boho', 40000)">Añadir al Carrito</button></div></div>
             </div>
+        </div>
 
-            <!-- Producto 7 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/NKaEXy1oW8jGtGHVZ6_CZ2EPiQ9D49WL-2XpikyU4mhSsVI5P7Qaga3hb5zvo_hUVl1X3xUjyMAS0o0=s1024-c-fcrop64=1,20000000dfffffff-rw-nd-v1" alt="Cojín decorativo">
-                <div class="info-producto">
-                    <h3>Pañuelo Tejido</h3>
-                    <p class="precio">$35.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Pañuelo Tejido', 35000)">Añadir al Carrito</button>
-                </div>
+        <!-- Pestaña 7: Prendas (10 productos con carrusel completo) -->
+        <div id="prendas" class="contenido-pestana">
+            <div class="grid-productos">
+                <!-- 10 productos para Prendas -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/QHYBTpcnFnILuTIKPBpx7lopDy4LeqM8e7bmPjme-fNWcBrzSWIMVVLRpzaGPGxd3UVJcc3DcdNE1g=s1024-c-fcrop64=1,00002000ffffdfff-rw-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Blusa verano</h3><p class="precio">$60.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Blusa verano', 60000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Cardigan largo tejido</h3><p class="precio">$90.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Cardigan largo tejido', 90000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Top crochet playero</h3><p class="precio">$45.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Top crochet playero', 45000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Chaleco abierto artesanal</h3><p class="precio">$55.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Chaleco abierto artesanal', 55000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Poncho abrigador tejido a mano</h3><p class="precio">$80.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Poncho abrigador tejido a mano', 80000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Short tejido playero</h3><p class="precio">$40.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Short tejido playero', 40000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Salida de baño crochet</h3><p class="precio">$75.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Salida de baño crochet', 75000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Suéter cuello tortuga tejido</h3><p class="precio">$85.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Suéter cuello tortuga tejido', 85000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Falda tejida midi</h3><p class="precio">$70.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Falda tejida midi', 70000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Torera elegante para vestido</h3><p class="precio">$45.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Torera elegante para vestido', 45000)">Añadir al Carrito</button></div></div>
             </div>
+        </div>
 
-            <!-- Producto 8 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/QHYBTpcnFnILuTIKPBpx7lopDy4LeqM8e7bmPjme-fNWcBrzSWIMVVLRpzaGPGxd3UVJcc3DcdNE1g=s1024-c-fcrop64=1,00002000ffffdfff-rw-nd-v1" alt="Blusa verano">
-                <div class="info-producto">
-                    <h3>Blusa verano</h3>
-                    <p class="precio">$60.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Blusa verano', 60000)">Añadir al Carrito</button>
-                </div>
-            </div>
-
-            <!-- Producto 9 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/2phXycVqgEOWvv5AC2TcarXU7oMQRj1pltDpPs-wboOMBQQ94xJTNBn21HeTuJkPHEBV2KNjvbUFTg=s1024-c-fcrop64=1,20000000dfffffff-rw-nd-v1" alt="Periquito tejido">
-                <div class="info-producto">
-                    <h3>Llavero de periquito tejido</h3>
-                    <p class="precio">$20.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Llavero de periquito tejido', 20000)">Añadir al Carrito</button>
-                </div>
-            </div>
-
-            <!-- Producto 10 -->
-            <div class="tarjeta-producto">
-                <img src="https://yt3.ggpht.com/48PM-NmbjO6BC0QOPY-3QP9GGbIo3r68VujYN5KucmzXa-Cdp31PZ1t-_B1J1HX_EVhLlDZZKzN1prM=s1024-c-fcrop64=1,20000000dfffffff-rw-nd-v1" alt="llavero tejido">
-                <div class="info-producto">
-                    <h3>Pollito vaquero tejido</h3>
-                    <p class="precio">$15.000</p>
-                    <button class="btn-comprar" onclick="agregarAlCarrito('Pollito vaquero tejido', 15000)">Añadir al Carrito</button>
-                </div>
+        <!-- Pestaña 8: Otras Cositas (10 productos con carrusel completo) -->
+        <div id="otras" class="contenido-pestana">
+            <div class="grid-productos">
+                <!-- 10 productos para Otras Cositas -->
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://yt3.ggpht.com/FWPYCJux9YclTEMykuCrguyJr9PGfjD0ilQQbzXkgvGWdtVmSa6UBylu9-xMaMOwr9hEs9Z1RXOIww=s640-c-fcrop64=1,20000000dfffffff-nd-v1"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Zapatillas tejidas de casa</h3><p class="precio">$25.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Zapatillas tejidas de casa', 25000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Marcador de libros tejido</h3><p class="precio">$10.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Marcador de libros tejido', 10000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Funda tejida para celular</h3><p class="precio">$18.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Funda tejida para celular', 18000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Estuche multiusos tejido</h3><p class="precio">$22.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Estuche multiusos tejido', 22000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Corbata moderna tejida</h3><p class="precio">$25.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Corbata moderna tejida', 25000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Sombrero playero de ganchillo</h3><p class="precio">$45.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Sombrero playero de ganchillo', 45000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Esponja exfoliante de baño tejida</h3><p class="precio">$12.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Esponja exfoliante de baño tejida', 12000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Adorno colgante tejido para carro</h3><p class="precio">$16.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Adorno colgante tejido para carro', 16000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Estuche porta audífonos tejido</h3><p class="precio">$14.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Estuche porta audífonos tejido', 14000)">Añadir al Carrito</button></div></div>
+                <div class="tarjeta-producto"><div class="carrusel-producto" data-index="0" onmouseenter="activarZoom(this)" onmouseleave="desactivarZoom(this)" onclick="alternarZoom(this)"><div class="carrusel-inner"><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600"></div><div class="carrusel-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video></div></div><button class="btn-carrusel btn-prev" onclick="event.stopPropagation(); moverSlide(this, -1)">&#10094;</button><button class="btn-carrusel btn-next" onclick="event.stopPropagation(); moverSlide(this, 1)">&#10095;</button><div class="carrusel-puntos"><span class="punto activo" onclick="event.stopPropagation(); irSlide(this, 0)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 1)"></span><span class="punto" onclick="event.stopPropagation(); irSlide(this, 2)"></span></div></div><div class="info-producto"><h3>Bolsita aromática tejida</h3><p class="precio">$15.000</p><button class="btn-comprar" onclick="agregarAlCarrito('Bolsita aromática tejida', 15000)">Añadir al Carrito</button></div></div>
             </div>
         </div>
     </section>
@@ -745,11 +1251,112 @@
     <script>
         let carrito = [];
         let total = 0;
-
-        // Número de contacto para WhatsApp
         const numeroTelefono = "573247245116"; 
 
-        // Agrega productos silenciosamente (SIN alertas ni abrir ventanas emergentes)
+        // Lógica para abrir/cerrar la imagen del logo
+        const imgLogoMini = document.getElementById('imgLogoMini');
+        const imgLogoAmpliado = document.getElementById('imgLogoAmpliado');
+
+        imgLogoMini.onclick = (e) => {
+            e.stopPropagation();
+            imgLogoAmpliado.classList.toggle('activo');
+        };
+
+        window.onclick = (e) => {
+            if (!imgLogoMini.contains(e.target) && !imgLogoAmpliado.contains(e.target)) {
+                imgLogoAmpliado.classList.remove('activo');
+            }
+        };
+
+        // Lógica para los Carruseles de Productos (Cambio suave y reproducción de videos)
+        function actualizarCarrusel(carrusel) {
+            const inner = carrusel.querySelector('.carrusel-inner');
+            const index = parseInt(carrusel.getAttribute('data-index'));
+            const items = carrusel.querySelectorAll('.carrusel-item');
+            const puntos = carrusel.querySelectorAll('.punto');
+
+            inner.style.transform = `translateX(-${index * 100}%)`;
+
+            puntos.forEach((p, i) => {
+                p.classList.toggle('activo', i === index);
+            });
+
+            // Reproducir video automáticamente si el elemento actual es un video
+            items.forEach((item, i) => {
+                const vid = item.querySelector('video');
+                if (vid) {
+                    if (i === index) {
+                        vid.play();
+                    } else {
+                        vid.pause();
+                        vid.currentTime = 0;
+                    }
+                }
+            });
+        }
+
+        function moverSlide(btn, direccion) {
+            const carrusel = btn.closest('.carrusel-producto');
+            const totalItems = carrusel.querySelectorAll('.carrusel-item').length;
+            let index = parseInt(carrusel.getAttribute('data-index'));
+
+            index += direccion;
+            if (index < 0) index = totalItems - 1;
+            if (index >= totalItems) index = 0;
+
+            carrusel.setAttribute('data-index', index);
+            actualizarCarrusel(carrusel);
+        }
+
+        function irSlide(punto, index) {
+            const carrusel = punto.closest('.carrusel-producto');
+            carrusel.setAttribute('data-index', index);
+            actualizarCarrusel(carrusel);
+        }
+
+        // Funciones de Zoom Suave en la Tarjeta sin Fondo Negro
+        function activarZoom(carrusel) {
+            carrusel.classList.add('ampliado');
+        }
+
+        function desactivarZoom(carrusel) {
+            carrusel.classList.remove('ampliado');
+        }
+
+        function alternarZoom(carrusel) {
+            carrusel.classList.toggle('ampliado');
+        }
+
+        // Navegación con teclado (Flechas izquierda/derecha para el carrusel activo al pasar el mouse)
+        let carruselHoverActivo = null;
+        document.querySelectorAll('.carrusel-producto').forEach(c => {
+            c.onmouseenter = () => { carruselHoverActivo = c; };
+            c.onmouseleave = () => { carruselHoverActivo = null; };
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (carruselHoverActivo) {
+                if (e.key === 'ArrowRight') {
+                    moverSlide(carruselHoverActivo.querySelector('.btn-next'), 1);
+                } else if (e.key === 'ArrowLeft') {
+                    moverSlide(carruselHoverActivo.querySelector('.btn-prev'), -1);
+                }
+            }
+        });
+
+        // Función para cambiar entre pestañas
+        function cambiarPestana(evento, idPestana) {
+            const contenidos = document.querySelectorAll('.contenido-pestana');
+            contenidos.forEach(c => c.classList.remove('activa'));
+
+            const botones = document.querySelectorAll('.btn-pestana');
+            botones.forEach(b => b.classList.remove('activa'));
+
+            document.getElementById(idPestana).classList.add('activa');
+            evento.currentTarget.classList.add('activa');
+        }
+
+        // Agrega productos al carrito
         function agregarAlCarrito(nombre, precio) {
             carrito.push({ nombre, precio, seleccionado: true });
             actualizarCarrito();
@@ -797,7 +1404,6 @@
             totalElemento.innerText = total.toLocaleString();
         }
 
-        // Abrir y cerrar la vista del carrito solo cuando el usuario lo pida
         function abrirCarrito() {
             document.getElementById('modalCarrito').style.display = 'flex';
         }
@@ -822,12 +1428,10 @@
             const url = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
 
-            // Mantener únicamente los elementos que NO estaban seleccionados (dejándolos en el carrito)
             carrito = carrito.filter(item => !item.seleccionado);
             actualizarCarrito();
         }
 
-        // Función para agregar opiniones sin recargar la página
         function agregarComentario() {
             const nombre = document.getElementById('nombreComentario').value.trim();
             const texto = document.getElementById('textoComentario').value.trim();
